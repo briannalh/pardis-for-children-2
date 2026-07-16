@@ -120,6 +120,33 @@ body[data-view="info"] {
 .nav__block--donate { background: var(--coral); }
 .nav__block--account { background: var(--navy); }
 
+/* "P" home button — slides in on non-home views, slides out on return */
+.nav__home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 42px;
+  height: var(--nav-h);
+  background: var(--ink);
+  color: var(--peach);
+  font-family: "Acidente", sans-serif;
+  font-size: 34px;
+  line-height: 1;
+  text-decoration: none;
+  overflow: hidden;
+  transition: width 0.5s ease, margin-right 0.5s ease, opacity 0.4s ease,
+    transform 0.5s ease;
+}
+
+body[data-view="home"] .nav__home {
+  width: 0;
+  margin-right: -2px;
+  opacity: 0;
+  transform: translateX(-8px);
+  pointer-events: none;
+}
+
 /* ---------- Hero grid ---------- */
 .hero {
   position: fixed;
@@ -138,24 +165,45 @@ body[data-view="info"] {
 }
 
 .logo__word {
+  position: relative;
   border: 0;
   background: none;
   cursor: pointer;
   color: var(--ink);
-  font-family: "Acidente", "Eskorte Arabic", sans-serif;
-  font-weight: 400;
   font-size: var(--logo-size);
   line-height: 1;
-  letter-spacing: -0.01em;
   white-space: nowrap;
   padding: 0;
 }
 
-.logo__word.is-fa {
+/* Ghost keeps the English footprint so the hit-area never shrinks
+   when the visible text swaps to the narrower Farsi word. */
+.logo__ghost {
+  visibility: hidden;
+  font-family: "Acidente", sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.logo__live {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-family: "Acidente", sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.logo__word.is-fa .logo__live {
   font-family: "Eskorte Arabic", sans-serif;
   font-weight: 800;
   letter-spacing: -0.02em;
 }
+
+.logo__word--1 .logo__live { text-align: left; }
+.logo__word--2 .logo__live { text-align: center; }
+.logo__word--3 .logo__live { text-align: right; }
 
 .logo__word--1 {
   grid-column: 1;
@@ -288,7 +336,7 @@ body[data-view="info"] .strip {
 
 .info__inner {
   min-height: 100%;
-  padding: calc(var(--edge) + var(--nav-h) + 20px) 16px 64px;
+  padding: 200px 16px 64px;
   color: var(--peach);
 }
 
@@ -300,10 +348,8 @@ body[data-view="info"] .strip {
   max-width: 934px;
 }
 
-.info__home {
+.info__name {
   color: inherit;
-  text-decoration: underline;
-  text-underline-position: from-font;
 }
 
 .info__body {
@@ -386,7 +432,8 @@ body[data-view="info"] .strip {
   .info,
   .lightbox,
   .logo__word,
-  .blurb {
+  .blurb,
+  .nav__home {
     transition: none;
   }
 }

@@ -2,19 +2,30 @@
   const body = document.body;
 
   /* ---------- Logo: English / Farsi word swap ---------- */
+  const LEAVE_BUFFER = 140;
   document.querySelectorAll(".logo__word").forEach((word) => {
+    const live = word.querySelector(".logo__live");
+    let leaveTimer;
+
     const toFa = () => {
+      clearTimeout(leaveTimer);
       word.classList.add("is-fa");
-      word.textContent = word.dataset.fa;
-      word.setAttribute("dir", "rtl");
+      live.textContent = word.dataset.fa;
+      live.setAttribute("dir", "rtl");
     };
     const toEn = () => {
       word.classList.remove("is-fa");
-      word.textContent = word.dataset.en;
-      word.removeAttribute("dir");
+      live.textContent = word.dataset.en;
+      live.removeAttribute("dir");
     };
+    // Small grace period so a brief cursor slip doesn't flicker the word back.
+    const toEnBuffered = () => {
+      clearTimeout(leaveTimer);
+      leaveTimer = setTimeout(toEn, LEAVE_BUFFER);
+    };
+
     word.addEventListener("mouseenter", toFa);
-    word.addEventListener("mouseleave", toEn);
+    word.addEventListener("mouseleave", toEnBuffered);
     word.addEventListener("focus", toFa);
     word.addEventListener("blur", toEn);
     word.addEventListener("click", () => {
@@ -94,28 +105,52 @@
     if (e.pointerType !== "mouse") hide();
   });
 
-  /* ---------- Home / Info views ---------- */
-  const setView = (view) => {
+  /* ---------- Home / Info views (with browser history) ---------- */
+  const info = document.getElementById("info");
+
+  const applyView = (view) => {
     body.dataset.view = view;
-    document.getElementById("info").setAttribute("aria-hidden", view === "info" ? "false" : "true");
+    info.setAttribute("aria-hidden", view === "info" ? "false" : "true");
     if (view === "info") hide();
+  };
+
+  const goInfo = () => {
+    if (location.hash !== "#info") {
+      history.pushState({ view: "info" }, "", "#info");
+    }
+    applyView("info");
+  };
+
+  const goHome = () => {
+    // Prefer stepping back so the history entry is consumed and Forward works.
+    if (location.hash === "#info") {
+      history.back();
+    } else {
+      applyView("home");
+    }
   };
 
   document.querySelectorAll('a[href="#info"]').forEach((link) => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
-      setView("info");
+      goInfo();
     });
   });
 
   document.querySelectorAll('a[href="#top"]').forEach((link) => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
-      setView("home");
+      goHome();
     });
   });
 
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") setView("home");
+  window.addEventListener("popstate", () => {
+    applyView(location.hash === "#info" ? "info" : "home");
   });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") goHome();
+  });
+
+  applyView(location.hash === "#info" ? "info" : "home");
 })();

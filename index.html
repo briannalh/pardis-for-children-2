@@ -11,6 +11,7 @@
 <body data-view="home">
   <nav class="nav" aria-label="Primary">
     <div class="nav__group nav__group--left">
+      <a class="nav__home" href="#top" aria-label="Return home">P</a>
       <a class="nav__block nav__block--info" href="#info">Info</a>
       <a class="nav__block nav__block--classes" href="#info">Classes &amp; Registration</a>
       <a class="nav__block nav__block--events" href="#info">Events</a>
@@ -21,6 +22,7 @@
       <a class="nav__block nav__block--account" href="#info">Account</a>
     </div>
     <div class="nav__group nav__group--mobile">
+      <a class="nav__home" href="#top" aria-label="Return home">P</a>
       <a class="nav__block nav__block--account nav__block--grow" href="#info">Menu</a>
       <a class="nav__block nav__block--donate nav__block--grow" href="#info">Donate</a>
       <a class="nav__block nav__block--classes" href="#info">Classes &amp; Registration</a>
@@ -29,9 +31,18 @@
 
   <main class="hero" id="top">
     <h1 class="logo" aria-label="Pardis for Children">
-      <button class="logo__word logo__word--1" type="button" data-en="pardis" data-fa="بهشت">pardis</button>
-      <button class="logo__word logo__word--2" type="button" data-en="for" data-fa="برای">for</button>
-      <button class="logo__word logo__word--3" type="button" data-en="children" data-fa="کودکان">children</button>
+      <button class="logo__word logo__word--1" type="button" data-en="pardis" data-fa="بهشت">
+        <span class="logo__ghost">pardis</span>
+        <span class="logo__live">pardis</span>
+      </button>
+      <button class="logo__word logo__word--2" type="button" data-en="for" data-fa="برای">
+        <span class="logo__ghost">for</span>
+        <span class="logo__live">for</span>
+      </button>
+      <button class="logo__word logo__word--3" type="button" data-en="children" data-fa="کودکان">
+        <span class="logo__ghost">children</span>
+        <span class="logo__live">children</span>
+      </button>
     </h1>
     <p class="blurb">Pardis means &ldquo;paradise&rdquo; (<span dir="rtl">بهشت</span>) in Persian. We&rsquo;ve created a space where Iranian-heritage children and families can discover connect and build friendships. Through classes, workshops, events, and learning materials we teach Persian language and Iranian culture while helping families build community.</p>
   </main>
@@ -45,7 +56,7 @@
 
   <section class="info" id="info" aria-hidden="true">
     <div class="info__inner">
-      <h2 class="info__headline"><a class="info__home" href="#top">Pardis for Children</a> is a NYC-based nonprofit that teaches Persian language and culture to children of Iranian heritage through art and music.</h2>
+      <h2 class="info__headline"><span class="info__name">Pardis for Children</span> is a NYC-based nonprofit that teaches Persian language and culture to children of Iranian heritage through art and music.</h2>
       <div class="info__body">
         <p>Pardis means &ldquo;paradise&rdquo; (<span dir="rtl">بهشت</span>) in Persian. We&rsquo;ve created a space where Iranian-heritage children and families can discover connect and build friendships. Through classes, workshops, events, and learning materials we teach Persian language and Iranian culture while helping families build community.</p>
         <p>Email us: info@pardisforchildren.org</p>
